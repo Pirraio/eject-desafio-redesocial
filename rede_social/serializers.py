@@ -4,7 +4,7 @@ from rede_social.models import Usuario, Postagem, Comentario
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'email', 'name', 'password']
+        fields = ['id', 'username', 'email', 'password', 'name', 'foto_perfil', 'data_criacao', 'data_nascimento']
 
 class PostagemSerializer(serializers.ModelSerializer):
     class Meta:
