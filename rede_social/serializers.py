@@ -15,3 +15,14 @@ class ComentarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comentario
         fields = '__all__'
+
+class ListaPostagemUsuarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Postagem
+        exclude = ['usuario']
+
+class ListaComentarioPostagemSerializer(serializers.ModelSerializer):
+    usuario = serializers.ReadOnlyField(source='usuario.username')
+    class Meta:
+        model = Comentario
+        fields = ['usuario', 'comentario', 'data_hora']
