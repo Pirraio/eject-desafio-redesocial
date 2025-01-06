@@ -1,10 +1,11 @@
 from django.db import models
 #from datetime import datetime
+from django.contrib.auth.models import AbstractUser
 
-class Usuario(models.Model):
+class Usuario(AbstractUser):
     username = models.CharField(max_length=16, unique=True, blank=False)
-    email = models.EmailField(max_length=30, unique=True, blank=False)
-    password = models.CharField(max_length=100, blank=False, null=False)
+    # email = models.EmailField(max_length=30, unique=True, blank=False)
+    # password = models.CharField(max_length=100, blank=False, null=False)
     name = models.CharField(max_length=100)
     data_nascimento = models.DateField(blank = False, null = True)
     data_criacao = models.DateField(null = True, auto_now_add=True)
