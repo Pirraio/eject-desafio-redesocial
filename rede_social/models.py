@@ -3,8 +3,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class Usuario(AbstractUser):
-    username = models.CharField(max_length=16, unique=True, blank=False)
-    # email = models.EmailField(max_length=30, unique=True, blank=False)
+    username = models.CharField(max_length=16, unique=True, blank=False, primary_key=True)
+    email = models.EmailField(max_length=30, unique=True, blank=False)
     # password = models.CharField(max_length=100, blank=False, null=False)
     name = models.CharField(max_length=100)
     data_nascimento = models.DateField(blank = False, null = True)

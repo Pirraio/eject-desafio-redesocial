@@ -2,11 +2,11 @@ from django.contrib import admin
 from rede_social.models import Usuario, Postagem, Comentario
 
 class UsuariosAdmin(admin.ModelAdmin):
-    list_display = ['id', 'username', 'name', 'email']
-    list_display_links = ['id', 'username']
+    list_display = ['username', 'name', 'email']
+    list_display_links = ['username']
     list_per_page = 30
     search_fields = ('username','email',)
-    ordering = ('id',)
+    ordering = ('username',)
 
 admin.site.register(Usuario, UsuariosAdmin)
 

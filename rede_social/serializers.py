@@ -5,7 +5,7 @@ class CadastrarUsuarioSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'email', 'password', 'name',  'foto_perfil', 'data_nascimento']
+        fields = ['username', 'email', 'password', 'name',  'foto_perfil', 'data_nascimento']
 
     def create(self, validated_data):
         user = Usuario(
@@ -22,7 +22,7 @@ class CadastrarUsuarioSerializer(serializers.ModelSerializer):
 class UsuarioSerializer(serializers.ModelSerializer): 
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'email', 'password', 'name', 'foto_perfil', 'data_criacao', 'data_nascimento']
+        fields = ['username', 'email', 'password', 'name', 'foto_perfil', 'data_criacao', 'data_nascimento']
 
 class PostagemSerializer(serializers.ModelSerializer):
     class Meta:

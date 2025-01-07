@@ -19,8 +19,8 @@ router.register('comentarios', ComentarioViewSet, basename='Comentário')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include(router.urls)),
-    path('usuarios/<int:pk>/postagens/',ListaPostagemUsuario.as_view()),
-    path('postagens/<int:pk>/comentarios/',ListaComentarioPostagem.as_view()),
+    path('usuarios/<str:pk>/postagens/',ListaPostagemUsuario.as_view()),
+    path('postagens/<str:pk>/comentarios/',ListaComentarioPostagem.as_view()),
     path('feed/',FeedPostagem.as_view()),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
