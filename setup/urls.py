@@ -3,11 +3,8 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework import routers
-from rede_social.views import UsuarioViewSet, PostagensViewSet, ComentarioViewSet, ListaPostagemUsuario, ListaComentarioPostagem, FeedPostagem, CadastrarUsuario
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+from rede_social.views import UsuarioViewSet, PostagensViewSet, ComentarioViewSet, ListaPostagemUsuario, ListaComentarioPostagem, FeedPostagem, CadastrarUsuario, CustomTokenObtainPairView, CustomTokenRefreshView
+
 
 router = routers.DefaultRouter()
 router.register('cadastrar', CadastrarUsuario, basename='Cadastrar')
@@ -22,6 +19,6 @@ urlpatterns = [
     path('usuarios/<str:pk>/postagens/',ListaPostagemUsuario.as_view()),
     path('postagens/<str:pk>/comentarios/',ListaComentarioPostagem.as_view()),
     path('feed/',FeedPostagem.as_view()),
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
