@@ -18,7 +18,7 @@ class Postagem(models.Model):
     texto = models.TextField(null=False, blank=False, max_length=500)
     usuario = models.ForeignKey(Usuario, on_delete = models.CASCADE)
     data_hora = models.DateTimeField(auto_now_add=True, blank=False)
-    imagem = models.ImageField(null = True, upload_to='posts/')
+    imagem = models.ImageField(null = True, upload_to='posts/', blank=True)
 
     def __str__(self):
         return self.texto
