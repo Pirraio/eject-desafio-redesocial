@@ -6,6 +6,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
+from rest_framework.decorators import api_view, permission_classes
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -148,3 +149,17 @@ class CustomTokenRefreshView(TokenRefreshView):
         except Exception as e:
             print(e)
             return Response({'sucess': False})
+        
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    try:
+        res = Response()
+        res.data = {'success':True}
+        res.delete_cookie('access_token', path='/', samesite='None')
+        res.delete_cookie('response_token', path='/', samesite='None')
+        
+        return res
+    except Exception as e:
+        print(e)
+        return Response({'success':False})
