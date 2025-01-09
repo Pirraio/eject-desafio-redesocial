@@ -35,6 +35,9 @@ class PostagensViewSet(viewsets.ModelViewSet):
     ordering = ['-data_hora']
     serializer_class = PostagemSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(usuario=self.request.user)
+
 class ComentarioViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Comentario.objects.all()
@@ -43,6 +46,9 @@ class ComentarioViewSet(viewsets.ModelViewSet):
     ordering_fields = ['id', 'data_hora']
     ordering = ['data_hora']
     serializer_class = ComentarioSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(usuario=self.request.user)
 
 class ListaPostagemUsuario(generics.ListAPIView):
     permission_classes = [IsAuthenticated]

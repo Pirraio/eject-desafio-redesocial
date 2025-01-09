@@ -28,11 +28,13 @@ class PostagemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Postagem
         fields = '__all__'
+        read_only_fields = ("usuario",)
 
 class ComentarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comentario
         fields = '__all__'
+        read_only_fields = ("usuario",)
 
 class ListaPostagemUsuarioSerializer(serializers.ModelSerializer):
     class Meta:
