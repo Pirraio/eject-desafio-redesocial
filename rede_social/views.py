@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view, permission_classes
+from rede_social.permissions import IsOwnerOrReadOnlyUser, IsOwnerOrReadOnlyPost, IsOwnerOrReadOnlyComment
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -20,14 +21,14 @@ class CadastrarUsuario(viewsets.ModelViewSet):
     http_method_names = ['post']
 
 class UsuarioViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnlyUser]
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['username', 'email']
 
 class PostagensViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnlyPost]
     queryset = Postagem.objects.all()
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['usuario__username', 'texto']
@@ -39,7 +40,7 @@ class PostagensViewSet(viewsets.ModelViewSet):
         serializer.save(usuario=self.request.user)
 
 class ComentarioViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnlyComment]
     queryset = Comentario.objects.all()
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['usuario__username', 'comentario']
