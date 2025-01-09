@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rede_social.models import Usuario, Postagem, Comentario
 
 class CadastrarUsuarioSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, style={'input_type': 'password'})
     class Meta:
         model = Usuario
         fields = ['username', 'email', 'password', 'name',  'foto_perfil', 'data_nascimento']
@@ -22,7 +22,7 @@ class CadastrarUsuarioSerializer(serializers.ModelSerializer):
 class UsuarioSerializer(serializers.ModelSerializer): 
     class Meta:
         model = Usuario
-        fields = ['username', 'email', 'password', 'name', 'foto_perfil', 'data_criacao', 'data_nascimento']
+        fields = ['username', 'email', 'name', 'foto_perfil', 'data_criacao', 'data_nascimento']
 
 class PostagemSerializer(serializers.ModelSerializer):
     class Meta:
