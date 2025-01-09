@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rede_social.models import Usuario, Postagem, Comentario
+from rest_framework.response import Response
 
 class CadastrarUsuarioSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, style={'input_type': 'password'})
@@ -20,9 +21,21 @@ class CadastrarUsuarioSerializer(serializers.ModelSerializer):
         return user
         
 class UsuarioSerializer(serializers.ModelSerializer): 
+    password = serializers.CharField(write_only=True, style={'input_type': 'password'})
     class Meta:
         model = Usuario
-        fields = ['username', 'email', 'name', 'foto_perfil', 'data_criacao', 'data_nascimento']
+        fields = ['email', 'password', 'name', 'foto_perfil', 'data_criacao', 'data_nascimento']
+    
+    def update(self, user, validated_data):
+        try:
+            #user.username = validated_data.get('username', user.username)
+            user.email = validated_data.get('email', user.email)
+            user.name = validated_data.get('name', user.name)
+            user.set_password(validated_data.get('password'))
+            user.save()
+            return user
+        except:
+            return Response({'sucess': False})
 
 class PostagemSerializer(serializers.ModelSerializer):
     class Meta:
