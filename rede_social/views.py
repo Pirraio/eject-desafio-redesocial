@@ -15,12 +15,30 @@ from rest_framework_simplejwt.views import (
 )
 
 class CadastrarUsuario(viewsets.ModelViewSet):
+    """
+    Descrição da ViewSet:
+    - Endpoint para cadastrar um novo usuário
+
+    Métodos HTTP permitidos:
+    - POST
+    """
     permission_classes = [AllowAny]
     queryset = Usuario.objects.all()
     serializer_class = CadastrarUsuarioSerializer
     http_method_names = ['post']
 
 class UsuarioViewSet(viewsets.ModelViewSet):
+    """
+    Descrição da ViewSet:
+    - Endpoint para realizar o CRUD de usuários
+
+    Campo de pesquisa:
+    -  username: Pesquisar por nome de usuário
+    - email: Pesquisar por email
+
+    Métodos HTTP permitidos:
+    - GET, POST, PUT, PATCH, DELETE
+    """
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnlyUser]
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
@@ -28,6 +46,22 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     search_fields = ['username', 'email']
 
 class PostagensViewSet(viewsets.ModelViewSet):
+    """
+    Descrição da ViewSet:
+    - Endpoint para realizar o CRUD de postagens
+
+    Campos de ordenação:
+    Por padrão ordena pela postagem mais recente
+    - id: Permite ordenar por id
+    - data_hora: Permite ordenar por data e hora
+
+    Campo de pesquisa:
+    - username: Pesquisar por usuário que realizou a postagem
+    - texto: Pesquisar por conteúdo da postagem
+
+    Métodos HTTP permitidos:
+    - GET, POST, PUT, PATCH, DELETE
+    """
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnlyPost]
     queryset = Postagem.objects.all()
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -40,6 +74,22 @@ class PostagensViewSet(viewsets.ModelViewSet):
         serializer.save(usuario=self.request.user)
 
 class ComentarioViewSet(viewsets.ModelViewSet):
+    """
+    Descrição da ViewSet:
+    - Endpoint para realizar o CRUD de comentários
+
+    Campos de ordenação:
+    Por padrão ordena pelo comentário mais antigo
+    - id: Permite ordenar por id
+    - data_hora: Permite ordenar por data e hora
+
+    Campo de pesquisa:
+    - username: Pesquisar por usuário que realizou o comentário
+    - comentario: Pesquisar por conteúdo do comentário
+    
+    Métodos HTTP permitidos:
+    - GET, POST, PUT, PATCH, DELETE
+    """
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnlyComment]
     queryset = Comentario.objects.all()
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -52,6 +102,25 @@ class ComentarioViewSet(viewsets.ModelViewSet):
         serializer.save(usuario=self.request.user)
 
 class ListaPostagemUsuario(generics.ListAPIView):
+    """
+    Descrição da ViewSet:
+    - Endpoint para acessar todas as postagens de um usuário
+
+    Parâmetros:
+    - pk (str): A chave primária do usuário. Deve ser seu nome de usuário
+
+    Campos de ordenação:
+    Por padrão ordena pela postagem mais recente
+    - id: Permite ordenar por id
+    - data_hora: Permite ordenar por data e hora
+
+    Campo de pesquisa:
+    - username: Pesquisar por usuário que realizou a postagem
+    - texto: Pesquisar por conteúdo da postagem
+
+    Métodos HTTP permitidos:
+    - GET
+    """
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         queryset = Postagem.objects.filter(usuario_id = self.kwargs['pk'])
@@ -63,6 +132,25 @@ class ListaPostagemUsuario(generics.ListAPIView):
     serializer_class = ListaPostagemUsuarioSerializer
 
 class ListaComentarioPostagem(generics.ListAPIView):
+    """
+    Descrição da ViewSet:
+    - Endpoint para acessar todos os comentários de uma postagem
+
+    Parâmetros:
+    - pk (int): A chave primária da postagem. Deve ser um inteiro.
+
+    Campos de ordenação:
+    Por padrão ordena pelo comentário mais antigo
+    - id: Permite ordenar por id
+    - data_hora: Permite ordenar por data e hora
+
+    Campo de pesquisa:
+    - username: Pesquisar por usuário que realizou o comentário
+    - comentario: Pesquisar por conteúdo do comentário
+       
+    Métodos HTTP permitidos:
+    - GET
+    """
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         queryset = Comentario.objects.filter(postagem_id = self.kwargs['pk'])
@@ -74,6 +162,22 @@ class ListaComentarioPostagem(generics.ListAPIView):
     serializer_class = ListaComentarioPostagemSerializer
 
 class FeedPostagem(generics.ListAPIView):
+    """
+    Descrição da ViewSet:
+    - Endpoint para visualizar todas as postagens ordenadas pela mais recente
+
+    Campos de ordenação:
+    Por padrão é ordenado pela publicação mais recente
+    - id: Permite ordenar por id
+    - data_hora: Permite ordenar por data e hora
+
+    Campo de pesquisa:
+    - username: Pesquisar por usuário que realizou a postagem
+    - texto: Pesquisar por conteúdo da postagem
+
+    Métodos HTTP permitidos:
+    - GET
+    """
     permission_classes = [IsAuthenticated]
     queryset = Postagem.objects.all().order_by('-data_hora')
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -83,7 +187,13 @@ class FeedPostagem(generics.ListAPIView):
     serializer_class = FeedPostagemSerializer
 
 class CustomTokenObtainPairView(TokenObtainPairView):
-    
+    """
+    Descrição da ViewSet:
+    - Endpoint para logar com um usuário e se autenticar
+
+    Métodos HTTP permitidos:
+    - POST
+    """
     def post(self, request, *args, **kwargs):
         try:
             response = super().post(request, *args, **kwargs)
@@ -129,6 +239,13 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             return Response({'success':False})
 
 class CustomTokenRefreshView(TokenRefreshView):
+    """
+    Descrição da ViewSet:
+    - Endpoint atualizar o token de acesso
+
+    Métodos HTTP permitidos:
+    - POST
+    """
     parser_classes = [JSONParser]
 
     def post(self, request, *args, **kwargs):
