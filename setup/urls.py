@@ -6,6 +6,7 @@ from rest_framework import routers
 from rede_social.views import UsuarioViewSet, PostagensViewSet, ComentarioViewSet, ListaPostagemUsuario, ListaComentarioPostagem, FeedPostagem, CadastrarUsuario, CustomTokenObtainPairView, CustomTokenRefreshView, logout
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from rest_framework import permissions
 
 router = routers.DefaultRouter()
 router.register('cadastrar', CadastrarUsuario, basename='Cadastrar')
@@ -20,6 +21,7 @@ schema_view = get_schema_view(
       description="Informação sobre o que a API pode fazer, seus endpoints, etc",
    ),
    public=True,
+   permission_classes=(permissions.AllowAny,),
 )
 
 
