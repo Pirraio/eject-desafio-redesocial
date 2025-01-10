@@ -17,7 +17,8 @@ class Usuario(AbstractUser):
 class Postagem(models.Model):
     texto = models.TextField(null=False, blank=False, max_length=500)
     usuario = models.ForeignKey(Usuario, on_delete = models.CASCADE)
-    data_hora = models.DateTimeField(auto_now_add=True, blank=False)
+    criado_data_hora = models.DateTimeField(auto_now_add=True, blank=False)
+    editado_data_hora = models.DateTimeField(auto_now=True, blank=True)
     imagem = models.ImageField(null = True, upload_to='posts/', blank=True)
 
     def __str__(self):
@@ -27,5 +28,5 @@ class Comentario(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete = models.CASCADE)
     postagem = models.ForeignKey(Postagem, on_delete = models.CASCADE)
     comentario = models.TextField(max_length=100, null=False, blank=False)
-    data_hora = models.DateTimeField(auto_now_add=True, blank=False, null=True)
-
+    criado_data_hora = models.DateTimeField(auto_now_add=True, blank=False)
+    editado_data_hora = models.DateTimeField(auto_now=True, blank=True)

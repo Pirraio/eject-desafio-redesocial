@@ -11,14 +11,14 @@ class UsuariosAdmin(admin.ModelAdmin):
 admin.site.register(Usuario, UsuariosAdmin)
 
 class PostagensAdmin(admin.ModelAdmin):
-    list_display = ['id', 'texto', 'data_hora']
+    list_display = ['id', 'texto', 'criado_data_hora']
     list_display_links = ['id']
     search_fields = ('texto',)
 
 admin.site.register(Postagem,PostagensAdmin)
 
 class ComentariosAdmin(admin.ModelAdmin):
-    list_display = ['id', 'usuario', 'postagem', 'comentario', 'data_hora']
+    list_display = ['id', 'usuario', 'postagem', 'comentario', 'criado_data_hora']
     list_display_links = ['id', 'usuario', 'postagem']
     search_fields = ('usuario', 'postagem', 'comentario',)
     
