@@ -26,14 +26,14 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include(router.urls)),
-    path('usuarios/<str:pk>/postagens/',ListaPostagemUsuario.as_view()),
-    path('postagens/<int:pk>/comentarios/',ListaComentarioPostagem.as_view()),
-    path('feed/',FeedPostagem.as_view()),
-    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
-    path('logout/', logout),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+   path('admin/', admin.site.urls),
+   path('',include(router.urls)),
+   path('usuarios/<str:username>/postagens/',ListaPostagemUsuario.as_view()),
+   path('postagens/<int:id>/comentarios/',ListaComentarioPostagem.as_view()),
+   path('feed/',FeedPostagem.as_view()),
+   path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+   path('token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
+   path('logout/', logout),
+   path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+   path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

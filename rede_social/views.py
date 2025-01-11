@@ -123,7 +123,10 @@ class ListaPostagemUsuario(generics.ListAPIView):
     """
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
-        queryset = Postagem.objects.filter(usuario_id = self.kwargs['pk'])
+        if self.request.user.is_anonymous:
+            return Postagem.objects.none()
+        username = self.kwargs['username']
+        queryset = Postagem.objects.filter(usuario_id = username)
         return queryset
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['usuario__username', 'texto']
@@ -153,7 +156,10 @@ class ListaComentarioPostagem(generics.ListAPIView):
     """
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
-        queryset = Comentario.objects.filter(postagem_id = self.kwargs['pk'])
+        if self.request.user.is_anonymous:
+            return Comentario.objects.none()
+        id = self.kwargs['id']
+        queryset = Comentario.objects.filter(postagem_id = id)
         return queryset
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['usuario__username', 'comentario']
