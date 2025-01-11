@@ -53,7 +53,7 @@ class PostagensViewSet(viewsets.ModelViewSet):
     Campos de ordenação:
     Por padrão ordena pela postagem mais recente
     - id: Permite ordenar por id
-    - data_hora: Permite ordenar por data e hora
+    - criado_data_hora: Permite ordenar por data e hora
 
     Campo de pesquisa:
     - username: Pesquisar por usuário que realizou a postagem
@@ -66,8 +66,8 @@ class PostagensViewSet(viewsets.ModelViewSet):
     queryset = Postagem.objects.all()
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['usuario__username', 'texto']
-    ordering_fields = ['id', 'data_hora']
-    ordering = ['-data_hora']
+    ordering_fields = ['id', 'criado_data_hora']
+    ordering = ['-criado_data_hora']
     serializer_class = PostagemSerializer
 
     def perform_create(self, serializer):
@@ -81,7 +81,7 @@ class ComentarioViewSet(viewsets.ModelViewSet):
     Campos de ordenação:
     Por padrão ordena pelo comentário mais antigo
     - id: Permite ordenar por id
-    - data_hora: Permite ordenar por data e hora
+    - criado_data_hora: Permite ordenar por data e hora
 
     Campo de pesquisa:
     - username: Pesquisar por usuário que realizou o comentário
@@ -94,8 +94,8 @@ class ComentarioViewSet(viewsets.ModelViewSet):
     queryset = Comentario.objects.all()
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['usuario__username', 'comentario']
-    ordering_fields = ['id', 'data_hora']
-    ordering = ['data_hora']
+    ordering_fields = ['id', 'criado_data_hora']
+    ordering = ['criado_data_hora']
     serializer_class = ComentarioSerializer
 
     def perform_create(self, serializer):
@@ -112,7 +112,7 @@ class ListaPostagemUsuario(generics.ListAPIView):
     Campos de ordenação:
     Por padrão ordena pela postagem mais recente
     - id: Permite ordenar por id
-    - data_hora: Permite ordenar por data e hora
+    - criado_data_hora: Permite ordenar por data e hora
 
     Campo de pesquisa:
     - username: Pesquisar por usuário que realizou a postagem
@@ -127,8 +127,8 @@ class ListaPostagemUsuario(generics.ListAPIView):
         return queryset
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['usuario__username', 'texto']
-    ordering_fields = ['id', 'data_hora']
-    ordering = ['-data_hora']
+    ordering_fields = ['id', 'criado_data_hora']
+    ordering = ['-criado_data_hora']
     serializer_class = ListaPostagemUsuarioSerializer
 
 class ListaComentarioPostagem(generics.ListAPIView):
@@ -142,7 +142,7 @@ class ListaComentarioPostagem(generics.ListAPIView):
     Campos de ordenação:
     Por padrão ordena pelo comentário mais antigo
     - id: Permite ordenar por id
-    - data_hora: Permite ordenar por data e hora
+    - criado_data_hora: Permite ordenar por data e hora
 
     Campo de pesquisa:
     - username: Pesquisar por usuário que realizou o comentário
@@ -157,8 +157,8 @@ class ListaComentarioPostagem(generics.ListAPIView):
         return queryset
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['usuario__username', 'comentario']
-    ordering_fields = ['id', 'data_hora']
-    ordering = ['data_hora']
+    ordering_fields = ['id', 'criado_data_hora']
+    ordering = ['criado_data_hora']
     serializer_class = ListaComentarioPostagemSerializer
 
 class FeedPostagem(generics.ListAPIView):
@@ -169,7 +169,7 @@ class FeedPostagem(generics.ListAPIView):
     Campos de ordenação:
     Por padrão é ordenado pela publicação mais recente
     - id: Permite ordenar por id
-    - data_hora: Permite ordenar por data e hora
+    - criado_data_hora: Permite ordenar por data e hora
 
     Campo de pesquisa:
     - username: Pesquisar por usuário que realizou a postagem
@@ -179,11 +179,11 @@ class FeedPostagem(generics.ListAPIView):
     - GET
     """
     permission_classes = [IsAuthenticated]
-    queryset = Postagem.objects.all().order_by('-data_hora')
+    queryset = Postagem.objects.all().order_by('-criado_data_hora')
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['usuario__username', 'texto']
-    ordering_fields = ['id', 'data_hora']
-    ordering = ['-data_hora']
+    ordering_fields = ['id', 'criado_data_hora']
+    ordering = ['-criado_data_hora']
     serializer_class = FeedPostagemSerializer
 
 class CustomTokenObtainPairView(TokenObtainPairView):

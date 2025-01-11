@@ -18,7 +18,7 @@ schema_view = get_schema_view(
    openapi.Info(
       title="Documentação da API",
       default_version='v1',
-      description="Informação sobre o que a API pode fazer, seus endpoints, etc",
+      description="Informação sobre o que a API pode fazer, permitindo visualizar endpoints disponíveis que usuários autenticados podem utilizar para realizar requisições e ver quais são permitidas para determinado endpoint.",
    ),
    public=True,
    permission_classes=(permissions.AllowAny,),
