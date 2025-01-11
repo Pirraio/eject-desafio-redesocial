@@ -28,15 +28,19 @@ Uma API REST simulando uma rede social em que usuários possam se cadastrar e fa
     ```
     pip install -r requirements.txt
     ```
-5. Crie um super usuário para ter permissões de administrador na API.
+5. Realize as migrações do projeto.
+    ```
+    python .\manage.py migrate
+    ```
+6. Crie um super usuário para ter permissões de administrador na API.
     ```
     python .\manage.py createsuperuser
     ```
-6. Execute esse comando para rodar o projeto.
+7. Execute esse comando para rodar o projeto.
     ```
     python .\manage.py runserver
     ``` 
-7. Acesse no seu navegador a seguinte url:
+8. Acesse no seu navegador a seguinte url:
     ```
     http://127.0.0.1:8000/
     ```
